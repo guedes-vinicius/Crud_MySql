@@ -31,6 +31,5 @@ class HomePage extends StatelessWidget{
 
 
 
-
 // codigo, nome, codigo de barras,
-//list view iten
+//list view itens, page control(page view)
