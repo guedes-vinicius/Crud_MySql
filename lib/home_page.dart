@@ -12,15 +12,17 @@ class HomePage extends StatelessWidget{
       appBar: AppBar(
         title: Text("Estoque"),
         actions: <Widget>[
-          IconButton(icon: const Icon(Icons.sort) ,
-              tooltip: "Ordenar",
+          IconButton(icon: const Icon(Icons.search_rounded) ,
+              tooltip: "Pesquisar",
         onPressed: (){}
         ),
-          IconButton(icon: const Icon(Icons.search),
-              tooltip: "Pesquisar",
+          IconButton(icon: const Icon(Icons.sort_rounded),
+              tooltip: "Ordenar",
               onPressed: (){}
               ),
-          IconButton(icon: const Icon(Icons.settings_applications), onPressed: (){})
+          IconButton(icon: const Icon(Icons.expand_more_rounded),
+              tooltip: "Mais",
+              onPressed: (){})
         ],
       ),
     );
@@ -31,4 +33,4 @@ class HomePage extends StatelessWidget{
 
 
 // codigo, nome, codigo de barras,
-//list view itens, page control
+//list view iten
