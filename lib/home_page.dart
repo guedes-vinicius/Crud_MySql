@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        initialIndex: 1,
+        initialIndex: 0,
         length: 2,
         child: Scaffold(
           appBar: AppBar(
@@ -50,14 +50,15 @@ class HomePage extends StatelessWidget {
                 children: <Widget>[
                   IconButton(
                       icon: Image.asset(
-                        'assets/icon.png',
+                        'assets/icon.png'
                       ),
                       iconSize: 50,
                       onPressed: () => Get.find<HomePageController>()
                           .escanearCodigoBarras()),
                   Expanded(
                     child: IconButton(
-                      icon: Image.asset('assets/more.png'),
+                      icon: Image.asset(
+                          'assets/more.png'),
                       padding: const EdgeInsets.fromLTRB(250.0, 500.0, 0.0, 0.0),
                       iconSize: 50,
                       onPressed: () {},
