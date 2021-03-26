@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'home_page_controler.dart';
+import 'package:contador_estoque/body/body_home.dart';
 
 class HomePage extends StatelessWidget {
   HomePage() {
@@ -19,7 +20,7 @@ class HomePage extends StatelessWidget {
           actions: <Widget>[
             IconButton(
                 icon: const Icon(Icons.search_rounded),
-                tooltip: "Pesquisar",
+                tooltip: "Pesquisar:",
                 onPressed: () {}),
             IconButton(
                 icon: const Icon(Icons.sort_rounded),
@@ -35,12 +36,18 @@ class HomePage extends StatelessWidget {
               indicatorColor: Colors.white,
               tabs: <Widget>[
                 Tab(
-                  text: "Contagem",
+                  text: "Total: $total",
                 ),
                 Tab(
-                  text: "Produtos",
+                  text: "Cadastrados",
                 )
               ]),
+        ),
+        body: TabBarView(
+          children: [
+            BodyHome(), //tab1
+            Icon(Icons.ac_unit) //tab2
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(
@@ -52,30 +59,6 @@ class HomePage extends StatelessWidget {
         bottomNavigationBar: BottomAppBar(
             color: Color(0xFFCB0A02), child: Container(height: 35.0)),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: Container(
-          padding: EdgeInsets.all(20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Text('Contagens',style:
-                  TextStyle(
-                    fontWeight: FontWeight.w800
-                  ),),
-                  Text('0')
-                ],
-              ),
-              Column(
-                children: [
-                  Text('Produtos'),
-                  Text('0')
-                ],
-              )
-            ],
-          ),
-
-        )
       ),
     );
   }
