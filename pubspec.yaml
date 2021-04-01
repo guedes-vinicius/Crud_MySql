@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^3.26.0
   flutter_barcode_scanner: ^1.0.2
+  sortedmap: ^0.5.0
 
 
 

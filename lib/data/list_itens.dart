@@ -1,4 +1,5 @@
 import 'itens.dart';
+import 'package:sortedmap/sortedmap.dart';
 
 const ListItens = {
   '1' : const Itens(
@@ -12,3 +13,10 @@ const ListItens = {
       CodBar: '8895426512365',
       QtdProd: 7)
 };
+
+const ListItensNull = {
+  '1' : const Itens(
+      CodBar: '325687456230',
+      QtdProd: 5)
+};
+

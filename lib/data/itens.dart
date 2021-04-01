@@ -18,5 +18,4 @@ class Itens {
 
 
 
-
 // codigo, nome, codigo de barras,quantidade

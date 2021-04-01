@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       getPages: [
         GetPage(name: '/', page: () => HomePage()),
+        //GetPage(name: '/formulario', page: () => HomePage())
       ],
     );
   }
