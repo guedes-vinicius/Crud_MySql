@@ -8,10 +8,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Get.config(defaultTransition: Transition.cupertino);
     return GetMaterialApp(
       getPages: [
-        GetPage(name: '/', page: () => HomePage()),
-        //GetPage(name: '/formulario', page: () => HomePage())
+        GetPage(name: '/', page: () => HomePage())
       ],
     );
   }

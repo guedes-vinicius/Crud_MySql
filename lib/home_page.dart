@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'components/search_dialog.dart';
 import 'home_page_controler.dart';
 import 'package:contador_estoque/body/body_home.dart';
 import 'package:contador_estoque/widgets/home_widgets.dart';
@@ -9,6 +10,10 @@ import 'package:contador_estoque/widgets/home_widgets.dart';
 class HomePage extends StatelessWidget {
   HomePage() {
     Get.put(HomePageController());
+    /*openSearch(BuildContext context) {
+      showDialog(context: context,builder:(_) => SearchDialog() );
+    }
+    }*/
   }
   @override
   Widget build(BuildContext context) {
@@ -47,7 +52,7 @@ class HomePage extends StatelessWidget {
                   icon: Icon(Icons.search_rounded),
                   color: Colors.white,
                   onPressed: () {
-                    Get.to(Find());
+                    Get.to(() => Find());
                   }),
               IconButton(
                 icon: Image.asset(
