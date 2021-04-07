@@ -20,7 +20,22 @@ class Find extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(10.0),
-            child:  /*buildTextField("Pesquise aqui", controller)*/TextField(
+            child: buildTextField("Pesquise aqui", controller,TextInputAction.search,)
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+            /*TextField(
               controller: controller,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
@@ -36,14 +51,6 @@ class Find extends StatelessWidget {
               textInputAction: TextInputAction.search,
               style: TextStyle(color: Colors.red, fontSize: 18.0),
               textAlign: TextAlign.center,
-              onSubmitted: (text){
-                Navigator.of(context).pop(text);
-              },
               autofocus: true,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+            ),*/
+

@@ -1,3 +1,4 @@
+import 'package:contador_estoque/body/add_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -77,7 +78,9 @@ class HomePage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Color(0xffff0000),
           child: Icon(Icons.add),
-          onPressed: () {},
+          onPressed: () {
+            Get.to(() => Add());
+          },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),

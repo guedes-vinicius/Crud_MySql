@@ -1,10 +1,7 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:contador_estoque/widgets/home_widgets.dart';
 
-Widget buildTextField(
-  String title,
-  TextEditingController c,
-) {
+Widget buildTextField(String title, TextEditingController c, TextInputAction) {
   return TextField(
     controller: c,
     decoration: InputDecoration(
@@ -17,12 +14,9 @@ Widget buildTextField(
           icon: Icon(Icons.close, color: Colors.red[700]), onPressed: c.clear),
       border: OutlineInputBorder(),
     ),
-    textInputAction: TextInputAction.search,
+    textInputAction: TextInputAction,
     style: TextStyle(color: Colors.red, fontSize: 18.0),
     textAlign: TextAlign.center,
-    onSubmitted: (text) {
-      Navigator.of(context).pop(text);
-    },
     autofocus: true,
   );
-}*/
+}
