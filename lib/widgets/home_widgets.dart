@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:contador_estoque/data/list_itens.dart';
 import 'package:contador_estoque/body/body_home.dart';
 import 'package:get/get.dart';
+import 'package:contador_estoque/components/text_dialog.dart';
 
 class Find extends StatelessWidget {
   final TextEditingController controller = TextEditingController();
@@ -19,7 +20,7 @@ class Find extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(10.0),
-            child: TextField(
+            child:  /*buildTextField("Pesquise aqui", controller)*/TextField(
               controller: controller,
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(

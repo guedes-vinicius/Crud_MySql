@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'components/search_dialog.dart';
+import 'components/text_dialog.dart';
 import 'home_page_controler.dart';
 import 'package:contador_estoque/body/body_home.dart';
 import 'package:contador_estoque/widgets/home_widgets.dart';
