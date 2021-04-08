@@ -20,7 +20,7 @@ class Find extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(10.0),
-            child: buildTextField("Pesquise aqui", controller,TextInputAction.search,)
+            child: buildTextField("Pesquise aqui", controller,TextInputAction.search)
           ),
         ],
       ),

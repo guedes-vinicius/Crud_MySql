@@ -6,7 +6,7 @@ Widget buildTextField(String title, TextEditingController c, TextInputAction) {
     controller: c,
     decoration: InputDecoration(
       focusedBorder:
-          OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+      OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
       floatingLabelBehavior: FloatingLabelBehavior.always,
       labelText: title,
       labelStyle: TextStyle(color: Colors.red),
