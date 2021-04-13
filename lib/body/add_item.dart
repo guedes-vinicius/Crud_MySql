@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 class Add extends StatelessWidget {
   final _form = GlobalKey<FormState>();
+  final Map<String ,String ,String , double> _formData = {};
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +13,12 @@ class Add extends StatelessWidget {
         appBar: AppBar(
             title: Text('Adicionar Item'),
             actions: [
-              IconButton(icon: Icon(Icons.save_outlined), onPressed: () {
-                _form.currentState.save();
-                Get.back();
-              })
+              IconButton(
+                  icon: Icon(Icons.save_outlined),
+                  onPressed: () {
+                    _form.currentState.save();
+                    Get.back();
+                  })
             ],
             centerTitle: true,
             backgroundColor: Color(0xFFCB0A02)),
@@ -25,22 +28,26 @@ class Add extends StatelessWidget {
             key: _form,
             child: Column(
               children: <Widget>[
-                TextFormField(
+                Flexible(
+                    child: TextFormField(
                   decoration: InputDecoration(labelText: 'Nome'),
-                  onSaved: (value){
+                  onSaved: (value) {
                     print(value);
                   },
-                ),
-                TextFormField(
+                )),
+                Flexible(
+                    child: TextFormField(
                   decoration: InputDecoration(labelText: 'Codigo de barras'),
-                ),
-                TextFormField(
+                )),
+                Flexible(
+                    child: TextFormField(
                   decoration: InputDecoration(labelText: 'Codigo'),
-                ),
-                TextFormField(
+                )),
+                Flexible(
+                    child: TextFormField(
                   decoration: InputDecoration(labelText: 'Quantidade'),
                   keyboardType: TextInputType.number,
-                ),
+                )),
               ],
             ),
           ),

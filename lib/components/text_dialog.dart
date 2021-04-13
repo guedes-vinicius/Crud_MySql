@@ -17,6 +17,6 @@ Widget buildTextField(String title, TextEditingController c, TextInputAction) {
     textInputAction: TextInputAction,
     style: TextStyle(color: Colors.red, fontSize: 18.0),
     textAlign: TextAlign.center,
-    autofocus: true,
+    autofocus: true
   );
 }
