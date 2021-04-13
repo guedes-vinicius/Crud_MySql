@@ -1,5 +1,5 @@
 import 'itens.dart';
-import 'package:sortedmap/sortedmap.dart';
+
 
 const ListItens = {
   '1' : const Itens(

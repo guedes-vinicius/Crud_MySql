@@ -7,8 +7,8 @@ class Itens {
   final int QtdProd;
 
   const Itens({
-    this.CodProd,
-    this.NomeProd,
+    @required this.CodProd,
+    @required this.NomeProd,
     @required this.CodBar,
     @required this.QtdProd,
   });
