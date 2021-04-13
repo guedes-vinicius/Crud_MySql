@@ -25,8 +25,9 @@ class Add extends StatelessWidget {
                           CodProd: _formData['CodProd'],
                           NomeProd: _formData['NomeProd'],
                           CodBar: _formData['CodBar'],
-                          QtdProd: _formData['QtdProd']));
+                          QtdProd: int.parse(_formData['QtdProd'])));
                       Get.back();
+                      Get.snackbar('Adicionado', 'Produto Adicionado');
                     }
                   })
             ],
