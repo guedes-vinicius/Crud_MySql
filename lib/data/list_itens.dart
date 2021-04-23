@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'itens.dart';
+
 
 
 const ListItens = {
@@ -11,7 +13,7 @@ const ListItens = {
       CodProd: '44887' ,
       NomeProd: "Teste item 2",
       CodBar: '8895426512365',
-      QtdProd: 7)
+      QtdProd: 7),
 };
 
 const ListItensNull = {

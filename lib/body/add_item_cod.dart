@@ -1,12 +1,12 @@
 import 'package:contador_estoque/data/itens.dart';
-import 'package:contador_estoque/data/list_itens.dart';
 import 'package:contador_estoque/home_page_controler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:contador_estoque/data/list_itens.dart';
+import 'package:contador_estoque/data/database_helper.dart';
 
 
 class AddCodBar extends StatelessWidget {
+  final dbHelper = Databasehelper.instance;
   final _form = GlobalKey<FormState>();
   final Map<String, Object> _formData = {};
 
@@ -23,11 +23,11 @@ class AddCodBar extends StatelessWidget {
 
                     if (isValid) {
                       _form.currentState.save();
-                      Get.put(Itens(
+                      var item = Itens(
                           CodProd: _formData['CodProd'],
                           NomeProd: _formData['NomeProd'],
                           CodBar: _formData['CodBar'],
-                          QtdProd:int.parse(_formData['QtdProd'])));
+                          QtdProd:int.parse(_formData['QtdProd']));
                       Get.back();
                       Get.snackbar('Adicionado', 'Produto adicionado');
                     }
