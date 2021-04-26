@@ -1,17 +1,37 @@
 import 'package:flutter/cupertino.dart';
 
 class Itens {
-  final String CodProd;
-  final String NomeProd;
-  final String CodBar;
-  final int QtdProd;
+  String CodProd;
+  String NomeProd;
+  String CodBar;
+  int QtdProd;
+  int id;
 
-  const Itens({
-    @required this.CodProd,
-    @required this.NomeProd,
-    @required this.CodBar,
-    @required this.QtdProd,
-  });
+  Itens(
+    this.CodProd,
+    this.NomeProd,
+    this.CodBar,
+    this.QtdProd,
+  );
+  Map<String, dynamic> toMap() {
+    var map = Map<String, dynamic>();
+    if (id != null) {
+      map['id'] = id;
+    }
+    map['CodProd'] = CodProd;
+    map['NomeProd'] = NomeProd;
+    map['CodBar'] = CodBar;
+    map['QtdPrd'] = QtdProd;
+    return map;
+  }
+
+  Itens.fromMapObject(Map<String, dynamic> map) {
+    this.id = map['id'];
+    this.CodProd = map['CodProd'];
+    this.NomeProd = map['NomeProd'];
+    this.CodBar = map['CodBar'];
+    this.QtdProd = map['QtdProd'];
+  }
 }
 
 

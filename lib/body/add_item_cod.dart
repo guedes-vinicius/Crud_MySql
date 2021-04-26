@@ -3,12 +3,34 @@ import 'package:contador_estoque/home_page_controler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:contador_estoque/data/database_helper.dart';
-
+import 'package:contador_estoque/widgets/funcoes.dart';
 
 class AddCodBar extends StatelessWidget {
   final dbHelper = Databasehelper.instance;
-  final _form = GlobalKey<FormState>();
+  final _form = new GlobalKey<FormState>();
   final Map<String, Object> _formData = {};
+
+  final _ccodigo = TextEditingController();
+  final _cnome = TextEditingController();
+  final _ccodbar = TextEditingController();
+  final _cqtd = TextEditingController();
+
+  int tamandoDaLista = 0;
+  List<Itens> listaDeItens;
+
+  void initState() {
+    banco = new DatabaseHelper();
+    banco.inicializabanco();
+
+    Future<List<Itens>> listaDeItens = banco.getListaDeItens();
+
+    listaDeItens.then((novaListaDeItens) {
+      setState(() {
+        this.listaDeItens = novaListaDeItens;
+        this.tamandoDaLista = novaListaDeItens.length;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +49,7 @@ class AddCodBar extends StatelessWidget {
                           CodProd: _formData['CodProd'],
                           NomeProd: _formData['NomeProd'],
                           CodBar: _formData['CodBar'],
-                          QtdProd:int.parse(_formData['QtdProd']));
+                          QtdProd: int.parse(_formData['QtdProd']));
                       Get.back();
                       Get.snackbar('Adicionado', 'Produto adicionado');
                     }
@@ -67,11 +89,12 @@ class AddCodBar extends StatelessWidget {
                         onSaved: (value) => _formData['NomeProd'] = value)),
                 Flexible(
                     child: TextFormField(
-                        initialValue: Get.find<HomePageController>().valorCodigoBarras,
+                        initialValue:
+                            Get.find<HomePageController>().valorCodigoBarras,
                         cursorColor: Colors.red,
                         style: TextStyle(color: Colors.red),
                         decoration:
-                        InputDecoration(labelText: 'Codigo de Barras'),
+                            InputDecoration(labelText: 'Codigo de Barras'),
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null ||
