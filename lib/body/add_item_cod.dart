@@ -2,11 +2,11 @@ import 'package:contador_estoque/data/itens.dart';
 import 'package:contador_estoque/home_page_controler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:contador_estoque/data/database_helper.dart';
 import 'package:contador_estoque/widgets/funcoes.dart';
+import 'package:contador_estoque/data/';
 
 class AddCodBar extends StatelessWidget {
-  final dbHelper = Databasehelper.instance;
+  // final dbHelper = Databasehelper.instance;
   final _form = new GlobalKey<FormState>();
   final Map<String, Object> _formData = {};
 

@@ -1,4 +1,4 @@
-import 'dart:math';
+/*import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:contador_estoque/data/list_itens.dart';
@@ -31,3 +31,4 @@ class ListProvider with ChangeNotifier {
             QtdProd: itens.QtdProd));
   }
 }
+*/
