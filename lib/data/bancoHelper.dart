@@ -40,11 +40,11 @@ class DatabaseHelper {
 
   void _criarBanco(Database db, int versao) async {
     await db.execute('CREATE TABLE $tabelaNome('
-        '$colId INTERGER PRIMARY KEY AUTOINCREMENT,'
+        '$colId INTEGER PRIMARY KEY AUTOINCREMENT,'
         '$colCodigo TEXT,'
         '$colNome TEXT,'
         '$colCodBar TEXT,'
-        '$colQdtProd INTERGER);');
+        '$colQdtProd INTEGER);');
   }
 
   Future<List<Map<String, dynamic>>> getProdutoMapList() async {

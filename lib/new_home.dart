@@ -92,7 +92,9 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xffff0000),
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          _adicionarProduto();
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -124,15 +126,15 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                 campoCodigo(),
                 Divider(
                   color: Colors.transparent,
-                  height: 10,
+                  height: 5,
                 ),
                 campoNome(),
                 Divider(
                   color: Colors.transparent,
-                  height: 10,
+                  height: 5,
                 ),
                 campoCodBar(),
-                Divider(height: 10,
+                Divider(height: 5,
                 color: Colors.transparent,),
                 campoQtd()
               ],
@@ -304,7 +306,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
           )
         );
       },
-    )
+    );
   }
 
 }

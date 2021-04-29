@@ -21,7 +21,7 @@ class Itens {
     map['CodProd'] = CodProd;
     map['NomeProd'] = NomeProd;
     map['CodBar'] = CodBar;
-    map['QtdPrd'] = QtdProd;
+    map['QtdProd'] = QtdProd;
     return map;
   }
 

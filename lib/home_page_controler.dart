@@ -19,7 +19,6 @@ class HomePageController extends GetxController {
     }else{
       valorCodigoBarras = barcodeScanRes;
       update();
-      Get.to(() => ());
     }
 
   }
