@@ -1,4 +1,4 @@
-import 'package:contador_estoque/components/prod_tile.dart';
+/*import 'package:contador_estoque/components/prod_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:contador_estoque/data/list_itens.dart';
 import 'package:contador_estoque/body/body_home.dart';
@@ -26,7 +26,7 @@ class Find extends StatelessWidget {
       ),
     );
   }
-}
+}*/
 
 
 

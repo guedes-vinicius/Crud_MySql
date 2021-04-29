@@ -1,4 +1,4 @@
-import 'package:contador_estoque/components/prod_tile.dart';
+/*import 'package:contador_estoque/components/prod_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:contador_estoque/data/list_itens.dart';
 var total = ListItens.length;
@@ -15,4 +15,4 @@ class BodyHome extends StatelessWidget {
       ),
     );
   }
-}
+}*/

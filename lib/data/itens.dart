@@ -4,7 +4,7 @@ class Itens {
   String CodProd;
   String NomeProd;
   String CodBar;
-  int QtdProd;
+  dynamic QtdProd;
   int id;
 
   Itens(

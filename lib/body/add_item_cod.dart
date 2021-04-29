@@ -1,26 +1,30 @@
-import 'package:contador_estoque/data/itens.dart';
+/*import 'package:contador_estoque/data/itens.dart';
 import 'package:contador_estoque/home_page_controler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:contador_estoque/widgets/funcoes.dart';
 import 'package:contador_estoque/data/';
+import 'package:contador_estoque/data/bancoHelper.dart';
 
 class AddCodBar extends StatelessWidget {
   // final dbHelper = Databasehelper.instance;
-  final _form = new GlobalKey<FormState>();
-  final Map<String, Object> _formData = {};
+  //final _form = new GlobalKey<FormState>();
+  //final Map<String, Object> _formData = {};
 
   final _ccodigo = TextEditingController();
   final _cnome = TextEditingController();
   final _ccodbar = TextEditingController();
   final _cqtd = TextEditingController();
+  final _formKey = new GlobalKey<FormState>();
+
+  static DatabaseHelper banco;
 
   int tamandoDaLista = 0;
   List<Itens> listaDeItens;
 
   void initState() {
     banco = new DatabaseHelper();
-    banco.inicializabanco();
+    banco.inicializaBanco();
 
     Future<List<Itens>> listaDeItens = banco.getListaDeItens();
 
@@ -126,3 +130,4 @@ class AddCodBar extends StatelessWidget {
         ));
   }
 }
+*/

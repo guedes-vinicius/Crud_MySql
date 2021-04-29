@@ -1,4 +1,4 @@
-import 'package:contador_estoque/data/itens.dart';
+/*import 'package:contador_estoque/data/itens.dart';
 import 'package:contador_estoque/data/list_itens.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -100,3 +100,4 @@ class Add extends StatelessWidget {
         ));
   }
 }
+*/

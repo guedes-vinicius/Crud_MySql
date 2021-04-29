@@ -34,7 +34,7 @@ class DatabaseHelper {
     String path = diretorio.path + 'produtos.db';
 
     var bancoDeProdutos =
-        await openDatabase(path, version: 1, onCreate: _criarBanco);
+    await openDatabase(path, version: 1, onCreate: _criarBanco);
     return bancoDeProdutos;
   }
 
@@ -69,11 +69,11 @@ class DatabaseHelper {
   Future<int> apagarProduto(int id) async {
     var db = await this.database;
     var result =
-        await db.rawDelete('DELETE FROM $tabelaNome WHERE $colId = $id');
+    await db.rawDelete('DELETE FROM $tabelaNome WHERE $colId = $id');
     return result;
   }
 
-  Future<List<Itens>> getListadeProdutos() async {
+  Future<List<Itens>> getListaDeProdutos() async {
     var produtoMapList = await getProdutoMapList();
     int count = produtoMapList.length;
     List<Itens> listaDeProdutos = List<Itens>.empty();
