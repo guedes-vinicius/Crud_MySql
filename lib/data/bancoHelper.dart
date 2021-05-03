@@ -11,7 +11,7 @@ class DatabaseHelper {
   String colId = 'id';
   String colCodigo = 'CodProd';
   String colNome = 'NomeProd';
-  String colCodBar = 'CodBar';
+  dynamic colCodBar = 'CodBar';
   dynamic colQdtProd = 'QtdProd';
 
   DatabaseHelper._createInstance();
@@ -44,7 +44,7 @@ class DatabaseHelper {
         '$colCodigo TEXT,'
         '$colNome TEXT,'
         '$colCodBar TEXT,'
-        '$colQdtProd INTEGER);');
+        '$colQdtProd TEXT);');
   }
 
   Future<List<Map<String, dynamic>>> getProdutoMapList() async {
@@ -76,7 +76,7 @@ class DatabaseHelper {
   Future<List<Itens>> getListaDeProdutos() async {
     var produtoMapList = await getProdutoMapList();
     int count = produtoMapList.length;
-    List<Itens> listaDeProdutos = List<Itens>.empty();
+    List<Itens> listaDeProdutos = List<Itens>();
     for (int i = 0; i < count; i++) {
       listaDeProdutos.add(Itens.fromMapObject(produtoMapList[i]));
     }

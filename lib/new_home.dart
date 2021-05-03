@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 class ListaDeProdutos extends StatefulWidget {
   ListaDeProdutos({Key key, this.titulo}) : super(key: key);
   final String titulo;
+
   @override
   _ListaDeprodutosState createState() => _ListaDeprodutosState();
 }
@@ -24,12 +25,12 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
 
   int qtd;
 
-
   final _formkey = new GlobalKey<FormState>();
   static DatabaseHelper banco;
 
   int tamanhoDaLista = 0;
   List<Itens> listaDeProdutos;
+
   @override
   void initState() {
     banco = new DatabaseHelper();
@@ -61,6 +62,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.titulo),
+        centerTitle: true,
       ),
       body: _listaDeProdutos(),
       bottomNavigationBar: BottomAppBar(
@@ -108,58 +110,67 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     });
   }
 
-  void _adicionarProduto(){
+  void _adicionarProduto() {
     _ccodigo.text = '';
     _cnome.text = '';
     _ccodbar.text = '';
     _cqtd.text = '';
     showDialog(
-      context: context,
-      builder: (BuildContext context){
-        return AlertDialog(title: new Text("Novo Produto"),
-        content: new Container(
-          child: new Form(
-            key: _formkey,
-            child: new Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                campoCodigo(),
-                Divider(
-                  color: Colors.transparent,
-                  height: 5,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("Novo Produto"),
+            content: new Container(
+              child: new Form(
+                key: _formkey,
+                child: new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Flexible(
+                      child: campoCodigo(),
+                    ),
+                    Divider(
+                      color: Colors.transparent,
+                      height: 10,
+                    ),
+                    Flexible(
+                      child: campoNome(),
+                    ),
+                    Divider(
+                      color: Colors.transparent,
+                      height: 10,
+                    ),
+                    Flexible(
+                      child: campoCodBar(),
+                    ),
+                    Divider(
+                      height: 10,
+                      color: Colors.transparent,
+                    ),
+                    Flexible(child: campoQtd())
+                  ],
                 ),
-                campoNome(),
-                Divider(
-                  color: Colors.transparent,
-                  height: 5,
-                ),
-                campoCodBar(),
-                Divider(height: 5,
-                color: Colors.transparent,),
-                campoQtd()
-              ],
+              ),
             ),
-          ),),
-          actions:<Widget> [
-            new TextButton(
-              child: new Text('Salvar'),
-              onPressed: (){
-                Itens _itens;
-                if (_formkey.currentState.validate()){                  
-                  _itens = new Itens(_ccodigo.text, _cnome.text, _ccodbar.text, _cqtd.text);
-                  banco.inserirProduto(_itens);
-                  _carregarLista();
-                  _formkey.currentState.reset();
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
-        );
-      }
-    );
+            actions: <Widget>[
+              new TextButton(
+                child: new Text('Salvar'),
+                onPressed: () {
+                  Itens _itens;
+                  if (_formkey.currentState.validate()) {
+                    _itens = new Itens(
+                        _ccodigo.text, _cnome.text, _ccodbar.text, _cqtd.text);
+                    banco.inserirProduto(_itens);
+                    _carregarLista();
+                    _formkey.currentState.reset();
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
+          );
+        });
   }
-
 
   void _atualizarProduto(Itens itens) {
     _ccodigo.text = itens.CodProd;
@@ -168,61 +179,65 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     _cqtd.text = itens.QtdProd;
 
     showDialog(
-      context: context,
-      builder: (BuildContext context){
-        return AlertDialog(title: new Text("Atualizar Produto"),
-        content: new Container(
-          child: new Form(
-            key: _formkey,
-            child: new Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                campoCodigo(),
-                Divider(
-                  color: Colors.transparent,
-                  height: 10,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("Atualizar Produto"),
+            content: new Container(
+              child: new Form(
+                key: _formkey,
+                child: new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Flexible(
+                      child: campoCodigo(),
+                    ),
+                    Divider(
+                      color: Colors.transparent,
+                      height: 10,
+                    ),
+                    Flexible(
+                      child: campoNome(),
+                    ),
+                    Divider(
+                      color: Colors.transparent,
+                      height: 10,
+                    ),
+                    Flexible(
+                      child: campoCodBar(),
+                    ),
+                    Divider(
+                      height: 10,
+                      color: Colors.transparent,
+                    ),
+                    Flexible(child: campoQtd())
+                  ],
                 ),
-                campoNome(),
-                Divider(
-                  color: Colors.transparent,
-                  height: 10,
-                ),
-                campoCodBar(),
-                Divider(height: 10,
-                color: Colors.transparent,),
-                campoQtd()
-              ],
+              ),
             ),
-          ),),
-          actions:<Widget> [
-            new TextButton(
-              child: new Text('Atualizar'),
-              onPressed: (){
-                Itens _itens;
-                if (_formkey.currentState.validate()){
+            actions: <Widget>[
+              new TextButton(
+                child: new Text('Atualizar'),
+                onPressed: () {
+                  Itens _itens;
+                  print(_cqtd);
+                  if (_formkey.currentState.validate()) {
+                    _itens = new Itens(
+                        _ccodigo.text, _cnome.text, _ccodbar.text, _cqtd.text);
+                    banco.atualizarProduto(_itens, itens.id);
 
-                  _itens = new Itens(_ccodigo.text, _cnome.text, _ccodbar.text, _cqtd.text);
-                  banco.atualizarProduto(_itens,itens.id);
+                    _carregarLista();
 
-                  _carregarLista();
+                    _formkey.currentState.reset();
 
-                  _formkey.currentState.reset();
-
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
-        );
-      }
-    );
-
-
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
+          );
+        });
   }
-
-
-
-
 
   Widget campoCodigo() {
     return new TextFormField(
@@ -288,25 +303,31 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     );
   }
 
-  Widget _listaDeProdutos(){
+  Widget _listaDeProdutos() {
     return ListView.builder(
       physics: const AlwaysScrollableScrollPhysics(),
       itemCount: tamanhoDaLista,
-      itemBuilder: (context, index){
+      itemBuilder: (context, index) {
         return GestureDetector(
           child: ListTile(
             title: Row(
-              children: <Widget>[
-                Expanded(child: Text(listaDeProdutos[index].CodProd),flex:1),
-                Expanded(child: Text(listaDeProdutos[index].NomeProd),flex: 3)
+              children: <Widget>[ // Daqui pra baixo, não tenho a minima noção de como esta funcionando.
+                Expanded(child: Text(listaDeProdutos[index].CodProd)),
+                Expanded(child: Text(listaDeProdutos[index].NomeProd), flex: 2)
               ],
             ),
             subtitle: Text(listaDeProdutos[index].CodBar),
             trailing: Text(listaDeProdutos[index].QtdProd.toString()),
-          )
+            leading: CircleAvatar(
+              child: Text(listaDeProdutos[index].NomeProd[0]),
+              backgroundColor: Color(0xffff0000),
+              foregroundColor: Color(0xfffcfcfc),
+            ),
+          ),
+          onLongPress: () => _removerItem(listaDeProdutos[0], index),
+          onTap: () => _atualizarProduto(listaDeProdutos[index]),
         );
       },
     );
   }
-
 }

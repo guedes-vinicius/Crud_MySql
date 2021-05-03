@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class Itens {
   String CodProd;
   String NomeProd;
-  String CodBar;
+  dynamic CodBar;
   dynamic QtdProd;
   int id;
 

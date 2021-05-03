@@ -13,6 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.config(defaultTransition: Transition.cupertino);
     return GetMaterialApp(
+      theme: ThemeData(
+        primaryColor: Color(0xffff0000)
+      ),
       getPages: [
         GetPage(name: '/', page: () => ListaDeProdutos(titulo: 'Contador de Estoque')
         )
