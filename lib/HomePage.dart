@@ -29,7 +29,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
 
   int tamanhoDaLista = 0;
   List<Itens> listaDeProdutos;
-  List<Itens> ListaPesquisa;
+  List<Itens> listaPesquisa;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     listaDeProdutos.then((novaListaDeProdutos) {
       setState(() {
         this.listaDeProdutos = novaListaDeProdutos;
-        this.ListaPesquisa = novaListaDeProdutos;
+        this.listaPesquisa = novaListaDeProdutos;
         this.tamanhoDaLista = novaListaDeProdutos.length;
       });
     });
@@ -73,7 +73,6 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
       ),
       body: _listaDeProdutos(),
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xffff0000),
         shape: CircularNotchedRectangle(),
         child: Row(
           children: [
@@ -90,13 +89,15 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                 }),
             Spacer(),
             GestureDetector(
-              child: IconButton(
-                icon: Icon(Icons.sort_rounded),
-                color: Colors.white,
-              ),
               onTap: () => _ordenarN(Itens),
               onLongPress: () => _ordenarI(Itens),
+              child: Icon(
+                Icons.sort_rounded,
+                color: Colors.white,
+                size: 26,
+              ),
             ),
+            Padding(padding: EdgeInsets.fromLTRB(10, 0, 8, 0)),
             IconButton(
                 icon: Icon(Icons.description_rounded),
                 color: Colors.white,
@@ -140,14 +141,14 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     });
   }
 
-  /*void _filterCountries(value) {
+  void _filteritens(value) {
     setState(() {
-      filteredCountries = countries
-          .where((country) =>
-              country['name'].toLowerCase().contains(value.toLowerCase()))
+      listaPesquisa = listaDeProdutos
+          .where((Itens) =>
+              Itens.NomeProd.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
-  }*/
+  }
 
   void _adicionarProduto() {
     _ccodigo.text = '';
