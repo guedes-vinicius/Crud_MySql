@@ -1,4 +1,4 @@
-import 'package:contador_estoque/new_home.dart';
+import 'package:contador_estoque/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,56 +1,84 @@
-/*import 'package:contador_estoque/components/prod_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:contador_estoque/data/list_itens.dart';
-import 'package:contador_estoque/body/body_home.dart';
-import 'package:get/get.dart';
-import 'package:contador_estoque/components/text_dialog.dart';
 
-class Find extends StatelessWidget {
-  final TextEditingController controller = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    final lista = {...ListItens};
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Pesquisa de itens'),
-        centerTitle: true,
-        backgroundColor: Color(0xFFCB0A02),
-      ),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: buildTextField("Pesquise aqui", controller,TextInputAction.search)
-          ),
-        ],
-      ),
-    );
-  }
+Widget campoNome(controler_nome) {
+  return TextFormField(
+    controller: controler_nome,
+    keyboardType: TextInputType.text,
+    validator: (valor) {
+      if (valor == null || valor.trim().isEmpty) {
+        return "invalido. Insira um nome";
+      }
+    },
+    decoration: InputDecoration(
+        hintText: 'Nome',
+        labelText: 'Nome do item',
+        border: OutlineInputBorder()),
+  );
+}
+
+Widget campoCodBar(controler_cod) {
+  return new TextFormField(
+    controller: controler_cod,
+    keyboardType: TextInputType.number,
+    validator: (valor) {
+      if (valor == null || valor.isEmpty || valor.trim().length < 13) {
+        return 'Invalido. O Codigo de barras precisa ter 13 digitos';
+      }
+    },
+    decoration: InputDecoration(
+        hintText: "Código de barras",
+        labelText: "Código de barras",
+        border: OutlineInputBorder()),
+  );
+}
+
+Widget campoQtd(controler_qtd) {
+  return new TextFormField(
+    controller: controler_qtd,
+    keyboardType: TextInputType.number,
+    validator: (valor) {
+      if (valor == null || valor.trim().isEmpty || valor == '0') {
+        return 'Invalido. Insira algum valor a partir de 1';
+      }
+    },
+    decoration: InputDecoration(
+        hintText: 'Quantidade',
+        labelText: 'Quantidade',
+        border: OutlineInputBorder()),
+  );
+}
+
+Widget campoCodigo(controler_cod) {
+  return new TextFormField(
+    controller: controler_cod,
+    keyboardType: TextInputType.text,
+    validator: (valor) {
+      if (valor == null || valor.trim().isEmpty) {
+        return 'Codigo Invalido';
+      }
+    },
+    decoration: InputDecoration(
+        hintText: 'Codigo',
+        labelText: 'Codigo do produto',
+        border: OutlineInputBorder()),
+  );
+}
+
+
+
+/*Widget campoCodBarLeitor(controler) {
+  return new TextFormField(
+    //controller: _ccodbar,
+    initialValue: Get.find<HomePageController>().valorCodigoBarras,
+    keyboardType: TextInputType.number,
+    validator: (valor) {
+      if (valor == null || valor.isEmpty || valor.trim().length < 13) {
+        return 'Invalido. O Codigo de barras precisa ter 13 digitos';
+      }
+    },
+    decoration: InputDecoration(
+        hintText: "Código de barras",
+        labelText: "Código de barras",
+        border: OutlineInputBorder()),
+  );
 }*/
-
-
-
-
-
-
-
-
-            /*TextField(
-              controller: controller,
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red)),
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelText: "Pesquise aqui",
-                labelStyle: TextStyle(color: Colors.red),
-                suffixIcon: IconButton(
-                    icon: Icon(Icons.close, color: Colors.red[700]),
-                    onPressed: controller.clear),
-                border: OutlineInputBorder(),
-              ),
-              textInputAction: TextInputAction.search,
-              style: TextStyle(color: Colors.red, fontSize: 18.0),
-              textAlign: TextAlign.center,
-              autofocus: true,
-            ),*/
-

@@ -1,9 +1,10 @@
-import 'package:contador_estoque/home_page_controler.dart';
+import 'package:contador_estoque/controller/home_page_controler.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:contador_estoque/data/bancoHelper.dart';
 import 'package:contador_estoque/data/itens.dart';
 import 'package:get/get.dart';
+import 'package:contador_estoque/widgets/home_widgets.dart';
 
 class ListaDeProdutos extends StatefulWidget {
   ListaDeProdutos({Key key, this.titulo}) : super(key: key);
@@ -23,7 +24,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   final _ccodbar = TextEditingController();
   final _cqtd = TextEditingController();
 
-  final _formkey = new GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
   static DatabaseHelper banco;
 
   int tamanhoDaLista = 0;
@@ -32,7 +33,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
 
   @override
   void initState() {
-    banco = new DatabaseHelper();
+    banco = DatabaseHelper();
     banco.inicializaBanco();
 
     Future<List<Itens>> listaDeProdutos = banco.getListaDeProdutos();
@@ -46,7 +47,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   }
 
   _carregarLista() {
-    banco = new DatabaseHelper();
+    banco = DatabaseHelper();
     banco.inicializaBanco();
     Future<List<Itens>> noteListFuture = banco.getListaDeProdutos();
     noteListFuture.then((novaListaDeProdutos) {
@@ -119,6 +120,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
       listaDeProdutos = List.from(listaDeProdutos)..removeAt(index);
       banco.apagarProduto(itens.id);
       tamanhoDaLista = tamanhoDaLista - 1;
+      Get.snackbar("Removido", "Item removido com Sucesso!");
     });
   }
 
@@ -138,64 +140,64 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     });
   }
 
-  void _filterCountries(value) {
+  /*void _filterCountries(value) {
     setState(() {
       filteredCountries = countries
           .where((country) =>
               country['name'].toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
-  }
+  }*/
 
   void _adicionarProduto() {
     _ccodigo.text = '';
     _cnome.text = '';
-    _ccodbar.text = Get.find<HomePageController>().valorCodigoBarras;
+    _ccodbar.text = '';
     _cqtd.text = '';
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text("Novo Produto"),
-            content: new Container(
-              child: new Form(
+            title: Text("Novo Produto"),
+            content: Container(
+              child: Form(
                 key: _formkey,
-                child: new Column(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Flexible(
-                      child: campoCodigo(),
+                      child: campoCodigo(_ccodigo),
                     ),
                     Divider(
                       color: Colors.transparent,
                       height: 10,
                     ),
                     Flexible(
-                      child: campoNome(),
+                      child: campoNome(_cnome),
                     ),
                     Divider(
                       color: Colors.transparent,
                       height: 10,
                     ),
                     Flexible(
-                      child: campoCodBar(),
+                      child: campoCodBar(_ccodbar),
                     ),
                     Divider(
                       height: 10,
                       color: Colors.transparent,
                     ),
-                    Flexible(child: campoQtd())
+                    Flexible(child: campoQtd(_cqtd))
                   ],
                 ),
               ),
             ),
             actions: <Widget>[
-              new TextButton(
-                child: new Text('Salvar'),
+              TextButton(
+                child: Text('Salvar'),
                 onPressed: () {
                   Itens _itens;
                   if (_formkey.currentState.validate()) {
-                    _itens = new Itens(
+                    _itens = Itens(
                         _ccodigo.text, _cnome.text, _ccodbar.text, _cqtd.text);
                     banco.inserirProduto(_itens);
                     _carregarLista();
@@ -212,52 +214,52 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   void _adicionarProdutoCod() {
     _ccodigo.text = '';
     _cnome.text = '';
-    _ccodbar.text = '';
+    _ccodbar.text = Get.find<HomePageController>().valorCodigoBarras;
     _cqtd.text = '';
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text("Novo Produto"),
-            content: new Container(
-              child: new Form(
+            title: Text("Novo Produto"),
+            content: Container(
+              child: Form(
                 key: _formkey,
-                child: new Column(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Flexible(
-                      child: campoCodigo(),
+                      child: campoCodigo(_ccodigo),
                     ),
                     Divider(
                       color: Colors.transparent,
                       height: 10,
                     ),
                     Flexible(
-                      child: campoNome(),
+                      child: campoNome(_cnome),
                     ),
                     Divider(
                       color: Colors.transparent,
                       height: 10,
                     ),
                     Flexible(
-                      child: campoCodBarLeitor(),
+                      child: campoCodBar(_ccodbar),
                     ),
                     Divider(
                       height: 10,
                       color: Colors.transparent,
                     ),
-                    Flexible(child: campoQtd())
+                    Flexible(child: campoQtd(_cqtd))
                   ],
                 ),
               ),
             ),
             actions: <Widget>[
-              new TextButton(
-                child: new Text('Salvar'),
+              TextButton(
+                child: Text('Salvar'),
                 onPressed: () {
                   Itens _itens;
                   if (_formkey.currentState.validate()) {
-                    _itens = new Itens(
+                    _itens = Itens(
                         _ccodigo.text, _cnome.text, _ccodbar.text, _cqtd.text);
                     banco.inserirProduto(_itens);
                     _carregarLista();
@@ -281,46 +283,46 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: new Text("Atualizar Produto"),
-            content: new Container(
-              child: new Form(
+            title: Text("Atualizar Produto"),
+            content: Container(
+              child: Form(
                 key: _formkey,
-                child: new Column(
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Flexible(
-                      child: campoCodigo(),
+                      child: campoCodigo(_ccodigo),
                     ),
                     Divider(
                       color: Colors.transparent,
                       height: 10,
                     ),
                     Flexible(
-                      child: campoNome(),
+                      child: campoNome(_cnome),
                     ),
                     Divider(
                       color: Colors.transparent,
                       height: 10,
                     ),
                     Flexible(
-                      child: campoCodBar(),
+                      child: campoCodBar(_ccodbar),
                     ),
                     Divider(
                       height: 10,
                       color: Colors.transparent,
                     ),
-                    Flexible(child: campoQtd())
+                    Flexible(child: campoQtd(_cqtd))
                   ],
                 ),
               ),
             ),
             actions: <Widget>[
-              new TextButton(
-                child: new Text('Atualizar'),
+              TextButton(
+                child: Text('Atualizar'),
                 onPressed: () {
                   Itens _itens;
                   if (_formkey.currentState.validate()) {
-                    _itens = new Itens(
+                    _itens = Itens(
                         _ccodigo.text, _cnome.text, _ccodbar.text, _cqtd.text);
                     banco.atualizarProduto(_itens, itens.id);
 
@@ -330,92 +332,12 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
 
                     Navigator.of(context).pop();
                   }
+                  Get.snackbar("Atualizado", "Item atualizado");
                 },
               ),
             ],
           );
         });
-  }
-
-  Widget campoCodigo() {
-    return new TextFormField(
-      controller: _ccodigo,
-      keyboardType: TextInputType.text,
-      validator: (valor) {
-        if (valor == null || valor.trim().isEmpty) {
-          return 'Codigo Invalido';
-        }
-      },
-      decoration: InputDecoration(
-          hintText: 'Codigo',
-          labelText: 'Codigo do produto',
-          border: OutlineInputBorder()),
-    );
-  }
-
-  Widget campoNome() {
-    return new TextFormField(
-      controller: _cnome,
-      keyboardType: TextInputType.text,
-      validator: (valor) {
-        if (valor == null || valor.trim().isEmpty) {
-          return "invalido. Insira um nome";
-        }
-      },
-      decoration: InputDecoration(
-          hintText: 'Nome',
-          labelText: 'Nome do item',
-          border: OutlineInputBorder()),
-    );
-  }
-
-  Widget campoCodBar() {
-    return new TextFormField(
-      controller: _ccodbar,
-      keyboardType: TextInputType.number,
-      validator: (valor) {
-        if (valor == null || valor.isEmpty || valor.trim().length < 13) {
-          return 'Invalido. O Codigo de barras precisa ter 13 digitos';
-        }
-      },
-      decoration: InputDecoration(
-          hintText: "Código de barras",
-          labelText: "Código de barras",
-          border: OutlineInputBorder()),
-    );
-  }
-
-  Widget campoCodBarLeitor() {
-    return new TextFormField(
-      //controller: _ccodbar,
-      initialValue: Get.find<HomePageController>().valorCodigoBarras,
-      keyboardType: TextInputType.number,
-      validator: (valor) {
-        if (valor == null || valor.isEmpty || valor.trim().length < 13) {
-          return 'Invalido. O Codigo de barras precisa ter 13 digitos';
-        }
-      },
-      decoration: InputDecoration(
-          hintText: "Código de barras",
-          labelText: "Código de barras",
-          border: OutlineInputBorder()),
-    );
-  }
-
-  Widget campoQtd() {
-    return new TextFormField(
-      controller: _cqtd,
-      keyboardType: TextInputType.number,
-      validator: (valor) {
-        if (valor == null || valor.trim().isEmpty || valor == '0') {
-          return 'Invalido. Insira algum valor a partir de 1';
-        }
-      },
-      decoration: InputDecoration(
-          hintText: 'Quantidade',
-          labelText: 'Quantidade',
-          border: OutlineInputBorder()),
-    );
   }
 
   Widget _listaDeProdutos() {
