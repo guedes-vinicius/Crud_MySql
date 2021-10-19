@@ -23,13 +23,12 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   final _ccodbar = TextEditingController();
   final _cqtd = TextEditingController();
 
-  int qtd;
-
   final _formkey = new GlobalKey<FormState>();
   static DatabaseHelper banco;
 
   int tamanhoDaLista = 0;
   List<Itens> listaDeProdutos;
+  List<Itens> ListaPesquisa;
 
   @override
   void initState() {
@@ -40,6 +39,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     listaDeProdutos.then((novaListaDeProdutos) {
       setState(() {
         this.listaDeProdutos = novaListaDeProdutos;
+        this.ListaPesquisa = novaListaDeProdutos;
         this.tamanhoDaLista = novaListaDeProdutos.length;
       });
     });
@@ -54,6 +54,12 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         this.listaDeProdutos = novaListaDeProdutos;
         this.tamanhoDaLista = novaListaDeProdutos.length;
       });
+    });
+  }
+
+  _ordenarPorNome() {
+    setState(() {
+      banco.ordenarNome();
     });
   }
 
@@ -77,13 +83,19 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
             IconButton(
                 icon: Image.asset('assets/icon.png',
                     width: 25, color: Colors.white),
-                onPressed: () =>
-                    Get.find<HomePageController>().escanearCodigoBarras()),
+                onPressed: () {
+                  Get.find<HomePageController>().escanearCodigoBarras();
+                  _adicionarProdutoCod();
+                }),
             Spacer(),
-            IconButton(
+            GestureDetector(
+              child: IconButton(
                 icon: Icon(Icons.sort_rounded),
                 color: Colors.white,
-                onPressed: () {}),
+              ),
+              onTap: () => _ordenarN(Itens),
+              onLongPress: () => _ordenarI(Itens),
+            ),
             IconButton(
                 icon: Icon(Icons.description_rounded),
                 color: Colors.white,
@@ -110,7 +122,94 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     });
   }
 
+  void _ordenarN(Itens) {
+    setState(() {
+      listaDeProdutos = List.from(listaDeProdutos)
+        ..sort((a, b) => a.NomeProd.compareTo(b.NomeProd));
+      banco.ordenarNome();
+    });
+  }
+
+  void _ordenarI(Itens) {
+    setState(() {
+      listaDeProdutos = List.from(listaDeProdutos)
+        ..sort((a, b) => a.id.compareTo(b.id));
+      banco.ordenarId();
+    });
+  }
+
+  void _filterCountries(value) {
+    setState(() {
+      filteredCountries = countries
+          .where((country) =>
+              country['name'].toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
+  }
+
   void _adicionarProduto() {
+    _ccodigo.text = '';
+    _cnome.text = '';
+    _ccodbar.text = Get.find<HomePageController>().valorCodigoBarras;
+    _cqtd.text = '';
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text("Novo Produto"),
+            content: new Container(
+              child: new Form(
+                key: _formkey,
+                child: new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Flexible(
+                      child: campoCodigo(),
+                    ),
+                    Divider(
+                      color: Colors.transparent,
+                      height: 10,
+                    ),
+                    Flexible(
+                      child: campoNome(),
+                    ),
+                    Divider(
+                      color: Colors.transparent,
+                      height: 10,
+                    ),
+                    Flexible(
+                      child: campoCodBar(),
+                    ),
+                    Divider(
+                      height: 10,
+                      color: Colors.transparent,
+                    ),
+                    Flexible(child: campoQtd())
+                  ],
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              new TextButton(
+                child: new Text('Salvar'),
+                onPressed: () {
+                  Itens _itens;
+                  if (_formkey.currentState.validate()) {
+                    _itens = new Itens(
+                        _ccodigo.text, _cnome.text, _ccodbar.text, _cqtd.text);
+                    banco.inserirProduto(_itens);
+                    _carregarLista();
+                    _formkey.currentState.reset();
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  void _adicionarProdutoCod() {
     _ccodigo.text = '';
     _cnome.text = '';
     _ccodbar.text = '';
@@ -141,7 +240,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                       height: 10,
                     ),
                     Flexible(
-                      child: campoCodBar(),
+                      child: campoCodBarLeitor(),
                     ),
                     Divider(
                       height: 10,
@@ -220,7 +319,6 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                 child: new Text('Atualizar'),
                 onPressed: () {
                   Itens _itens;
-                  print(_cqtd);
                   if (_formkey.currentState.validate()) {
                     _itens = new Itens(
                         _ccodigo.text, _cnome.text, _ccodbar.text, _cqtd.text);
@@ -287,6 +385,23 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     );
   }
 
+  Widget campoCodBarLeitor() {
+    return new TextFormField(
+      //controller: _ccodbar,
+      initialValue: Get.find<HomePageController>().valorCodigoBarras,
+      keyboardType: TextInputType.number,
+      validator: (valor) {
+        if (valor == null || valor.isEmpty || valor.trim().length < 13) {
+          return 'Invalido. O Codigo de barras precisa ter 13 digitos';
+        }
+      },
+      decoration: InputDecoration(
+          hintText: "Código de barras",
+          labelText: "Código de barras",
+          border: OutlineInputBorder()),
+    );
+  }
+
   Widget campoQtd() {
     return new TextFormField(
       controller: _cqtd,
@@ -311,7 +426,8 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         return GestureDetector(
           child: ListTile(
             title: Row(
-              children: <Widget>[ // Daqui pra baixo, não tenho a minima noção de como esta funcionando.
+              children: <Widget>[
+                // Daqui pra baixo, não tenho a minima noção de como esta funcionando.
                 Expanded(child: Text(listaDeProdutos[index].CodProd)),
                 Expanded(child: Text(listaDeProdutos[index].NomeProd), flex: 2)
               ],
