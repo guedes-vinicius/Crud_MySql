@@ -30,6 +30,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   int tamanhoDaLista = 0;
   List<Itens> listaDeProdutos;
   List<Itens> listaPesquisa;
+  bool isSearching = false;
 
   @override
   void initState() {
@@ -54,6 +55,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
       setState(() {
         this.listaDeProdutos = novaListaDeProdutos;
         this.tamanhoDaLista = novaListaDeProdutos.length;
+        this.listaPesquisa = novaListaDeProdutos;
       });
     });
   }
@@ -68,7 +70,41 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.titulo),
+        title: !isSearching
+            ? Text('Contador de Estoque')
+            : TextField(
+                style: TextStyle(color: Colors.white),
+                onChanged: (value) {
+                  _filterItens(value);
+                },
+                decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    hintText: "Procure o item aqui",
+                    hintStyle: TextStyle(color: Colors.white)),
+              ),
+        actions: <Widget>[
+          isSearching
+              ? IconButton(
+                  icon: Icon(Icons.cancel),
+                  onPressed: () {
+                    setState(() {
+                      this.isSearching = false;
+                      listaPesquisa = listaDeProdutos;
+                    });
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    setState(() {
+                      this.isSearching = true;
+                    });
+                  },
+                )
+        ],
         centerTitle: true,
       ),
       body: _listaDeProdutos(),
@@ -77,7 +113,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         child: Row(
           children: [
             IconButton(
-                icon: Icon(Icons.search_rounded),
+                icon: Icon(Icons.adjust),
                 color: Colors.white,
                 onPressed: () {}),
             IconButton(
@@ -141,7 +177,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     });
   }
 
-  void _filteritens(value) {
+  void _filterItens(value) {
     setState(() {
       listaPesquisa = listaDeProdutos
           .where((Itens) =>
@@ -344,29 +380,42 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   Widget _listaDeProdutos() {
     return ListView.builder(
       physics: const AlwaysScrollableScrollPhysics(),
-      itemCount: tamanhoDaLista,
+      itemCount: listaPesquisa.length,
       itemBuilder: (context, index) {
         return GestureDetector(
           child: ListTile(
             title: Row(
               children: <Widget>[
                 // Daqui pra baixo, não tenho a minima noção de como esta funcionando.
-                Expanded(child: Text(listaDeProdutos[index].CodProd)),
-                Expanded(child: Text(listaDeProdutos[index].NomeProd), flex: 2)
+                Expanded(child: Text(listaPesquisa[index].CodProd)),
+                Expanded(child: Text(listaPesquisa[index].NomeProd), flex: 2)
               ],
             ),
-            subtitle: Text(listaDeProdutos[index].CodBar),
-            trailing: Text(listaDeProdutos[index].QtdProd.toString()),
+            subtitle: Text(listaPesquisa[index].CodBar),
+            trailing: Text(listaPesquisa[index].QtdProd.toString()),
             leading: CircleAvatar(
-              child: Text(listaDeProdutos[index].NomeProd[0]),
+              child: Text(listaPesquisa[index].NomeProd[0]),
               backgroundColor: Color(0xffff0000),
               foregroundColor: Color(0xfffcfcfc),
             ),
           ),
-          onLongPress: () => _removerItem(listaDeProdutos[0], index),
-          onTap: () => _atualizarProduto(listaDeProdutos[index]),
+          onLongPress: () => _removerItem(listaPesquisa[0], index),
+          onTap: () => _atualizarProduto(listaPesquisa[index]),
         );
       },
     );
   }
+}
+
+Widget _Loading() {
+  return Center(
+    child: Wrap(
+      alignment: WrapAlignment.center,
+      children: [
+        CircularProgressIndicator(),
+        SizedBox(width: 10),
+        Text('Loading...', style: TextStyle(fontSize: 20.0)),
+      ],
+    ),
+  );
 }

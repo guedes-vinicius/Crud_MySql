@@ -84,4 +84,3 @@ final Color logoGreen = Color(0xff25bcbb);
         border: OutlineInputBorder()),
   );
 }*/
-
