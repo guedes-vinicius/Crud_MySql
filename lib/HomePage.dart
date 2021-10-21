@@ -72,7 +72,19 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     return Scaffold(
       appBar: AppBar(
         title: !isSearching
-            ? Text('Contador de Estoque')
+            ? TextButton(
+                child: Text(
+                  "Contador de Estoque",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                onPressed: () {
+                  setState(() {
+                    this.isSearching = false;
+                    listaPesquisa = listaDeProdutos;
+                  });
+                },
+              )
             : TextField(
                 style: TextStyle(color: Colors.white),
                 onChanged: (value) {
