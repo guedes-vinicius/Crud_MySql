@@ -31,6 +31,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   List<Itens> listaDeProdutos;
   List<Itens> listaPesquisa;
   bool isSearching = false;
+  bool isInList = false;
 
   @override
   void initState() {
@@ -112,18 +113,21 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         shape: CircularNotchedRectangle(),
         child: Row(
           children: [
-            IconButton(
-                icon: Icon(Icons.adjust),
-                color: Colors.white,
-                onPressed: () {}),
+            Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
             IconButton(
                 icon: Image.asset('assets/icon.png',
                     width: 25, color: Colors.white),
                 onPressed: () {
                   Get.find<HomePageController>().escanearCodigoBarras();
-                  _adicionarProdutoCod();
+                  if (Get.find<HomePageController>()
+                      .valorCodigoBarras
+                      .isEmpty) {
+                    Get.to('/');
+                  } else {
+                    _adicionarProdutoCod();
+                  }
                 }),
-            Spacer(),
+            Padding(padding: EdgeInsets.fromLTRB(30, 0, 0, 0)),
             GestureDetector(
               onTap: () => _ordenarN(Itens),
               onLongPress: () => _ordenarI(Itens),
@@ -133,11 +137,16 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                 size: 26,
               ),
             ),
-            Padding(padding: EdgeInsets.fromLTRB(10, 0, 8, 0)),
+            Spacer(),
             IconButton(
                 icon: Icon(Icons.description_rounded),
                 color: Colors.white,
-                onPressed: () {})
+                onPressed: () {}),
+            Padding(padding: EdgeInsets.fromLTRB(10, 0, 8, 0)),
+            IconButton(
+                icon: Icon(Icons.restore, size: 27),
+                color: Colors.white,
+                onPressed: () {}),
           ],
         ),
       ),
@@ -163,7 +172,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
 
   void _ordenarN(Itens) {
     setState(() {
-      listaDeProdutos = List.from(listaDeProdutos)
+      listaPesquisa = List.from(listaPesquisa)
         ..sort((a, b) => a.NomeProd.compareTo(b.NomeProd));
       banco.ordenarNome();
     });
@@ -171,7 +180,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
 
   void _ordenarI(Itens) {
     setState(() {
-      listaDeProdutos = List.from(listaDeProdutos)
+      listaPesquisa = List.from(listaPesquisa)
         ..sort((a, b) => a.id.compareTo(b.id));
       banco.ordenarId();
     });
@@ -182,6 +191,15 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
       listaPesquisa = listaDeProdutos
           .where((Itens) =>
               Itens.NomeProd.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
+  }
+
+  void _verificarCodBar(value) {
+    setState(() {
+      listaPesquisa = listaDeProdutos
+          .where((Itens) =>
+              Itens.CodBar.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
