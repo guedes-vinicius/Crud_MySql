@@ -124,7 +124,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                       .isEmpty) {
                     Get.to('/');
                   } else {
-                    _adicionarProdutoCod();
+                    _verificarCodBar();
                   }
                 }),
             Padding(padding: EdgeInsets.fromLTRB(30, 0, 0, 0)),
@@ -195,13 +195,22 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     });
   }
 
-  void _verificarCodBar(value) {
-    setState(() {
-      listaPesquisa = listaDeProdutos
-          .where((Itens) =>
-              Itens.CodBar.toLowerCase().contains(value.toLowerCase()))
-          .toList();
-    });
+  void _verificarCodBar() {
+    String valor = Get.find<HomePageController>().valorCodigoBarras;
+    listaPesquisa = listaDeProdutos
+        .where(
+            (Itens) => Itens.CodBar.toLowerCase().contains(valor.toLowerCase()))
+        .toList();
+    if (listaPesquisa.length == 0) {
+      _adicionarProdutoCod();
+    } else {
+      setState(() {
+        listaPesquisa = listaDeProdutos
+            .where((Itens) =>
+                Itens.CodBar.toLowerCase().contains(valor.toLowerCase()))
+            .toList();
+      });
+    }
   }
 
   void _adicionarProduto() {
