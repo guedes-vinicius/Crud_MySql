@@ -79,6 +79,12 @@ class DatabaseHelper {
     return result;
   }
 
+  Future<int> zerarQtd() async {
+    var db = await this.database;
+    var result = await db.rawUpdate("UPDATE $tabelaNome SET $colQdtProd = 0");
+    return result;
+  }
+
   Future<int> apagarProduto(int id) async {
     var db = await this.database;
     var result =

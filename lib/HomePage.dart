@@ -158,7 +158,14 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
             IconButton(
                 icon: Icon(Icons.restore, size: 27),
                 color: Colors.white,
-                onPressed: () {}),
+                onPressed: () {
+                  setState(() {
+                    banco.zerarQtd();
+                    listaPesquisa = listaDeProdutos;
+                    _carregarLista();
+                    Get.snackbar("Zerado", "Estoque foi zerado com sucesso");
+                  });
+                }),
           ],
         ),
       ),
