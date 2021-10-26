@@ -5,6 +5,7 @@ import 'package:contador_estoque/data/bancoHelper.dart';
 import 'package:contador_estoque/data/itens.dart';
 import 'package:get/get.dart';
 import 'package:contador_estoque/widgets/home_widgets.dart';
+import 'dart:async';
 
 class ListaDeProdutos extends StatefulWidget {
   ListaDeProdutos({Key key, this.titulo}) : super(key: key);
@@ -134,6 +135,8 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                   if (Get.find<HomePageController>()
                       .valorCodigoBarras
                       .isEmpty) {
+                    Get.snackbar(
+                        "Vazio", "Não consegui ler o codigo. Tente novamente");
                     Get.to('/');
                   } else {
                     _verificarCodBar();

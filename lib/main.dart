@@ -1,6 +1,7 @@
 import 'package:contador_estoque/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:async';
 
 void main() {
   runApp(MyApp());
