@@ -66,6 +66,13 @@ class DatabaseHelper {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> gerarArquivo() async {
+    Database db = await this.database;
+    await db.execute('.mode list');
+    await db.execute('.separator |');
+    await db.execute('.output');
+  }
+
   Future<int> inserirProduto(Itens itens) async {
     Database db = await this.database;
     var result = await db.insert(tabelaNome, itens.toMap());

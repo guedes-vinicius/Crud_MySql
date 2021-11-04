@@ -6,6 +6,7 @@ import 'package:contador_estoque/data/itens.dart';
 import 'package:get/get.dart';
 import 'package:contador_estoque/widgets/home_widgets.dart';
 import 'dart:async';
+import 'package:contador_estoque/screens/Add Item.dart';
 
 class ListaDeProdutos extends StatefulWidget {
   ListaDeProdutos({Key key, this.titulo}) : super(key: key);
@@ -72,6 +73,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xff18203d),
         title: !isSearching
             ? TextButton(
                 child: Text(
@@ -122,6 +124,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         centerTitle: true,
       ),
       body: _listaDeProdutos(),
+      backgroundColor: Color(0xff232c51),
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
         child: Row(
@@ -173,10 +176,11 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xffff0000),
+        backgroundColor: Color.fromARGB(255, 255, 136, 34),
         child: Icon(Icons.add),
         onPressed: () {
           _adicionarProduto();
+          //Get.to(() => AddItem());
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -241,6 +245,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     _ccodbar.text = '';
     _cqtd.text = '';
     showDialog(
+        useSafeArea: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -444,7 +449,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
             trailing: Text(listaPesquisa[index].QtdProd.toString()),
             leading: CircleAvatar(
               child: Text(listaPesquisa[index].NomeProd[0]),
-              backgroundColor: Color(0xffff0000),
+              backgroundColor: Color.fromARGB(255, 255, 136, 34),
               foregroundColor: Color(0xfffcfcfc),
             ),
           ),

@@ -1,4 +1,5 @@
-import 'package:contador_estoque/HomePage.dart';
+import 'package:contador_estoque/screens/Add%20Item.dart';
+import 'package:contador_estoque/screens/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -14,12 +15,13 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       theme: ThemeData(
           primaryColor: Color(0xffff0000),
-          primarySwatch: Colors.red,
-          bottomAppBarColor: Color(0xffff0000)),
+          bottomAppBarColor: Color(0xff18203d)),
       getPages: [
         GetPage(
-            name: '/',
-            page: () => ListaDeProdutos(titulo: 'Contador de Estoque'))
+          name: '/',
+          page: () => ListaDeProdutos(titulo: 'Contador de Estoque'),
+        ),
+        GetPage(name: '/AddItem', page: () => AddItem())
       ],
       title: 'Contador de Estoque',
       home: ListaDeProdutos(titulo: 'Contador de Estoque'),
