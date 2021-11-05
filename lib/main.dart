@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     Get.config(defaultTransition: Transition.cupertino);
     return GetMaterialApp(
       theme: ThemeData(
+          scaffoldBackgroundColor: Color(0xff232c51),
           primaryColor: Color(0xffff0000),
           bottomAppBarColor: Color(0xff18203d)),
       getPages: [

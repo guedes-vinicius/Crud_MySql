@@ -25,6 +25,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   final _cnome = TextEditingController();
   final _ccodbar = TextEditingController();
   final _cqtd = TextEditingController();
+  //const textstyle = TextStyle();
 
   final _formkey = GlobalKey<FormState>();
   static DatabaseHelper banco;
@@ -179,8 +180,8 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         backgroundColor: Color.fromARGB(255, 255, 136, 34),
         child: Icon(Icons.add),
         onPressed: () {
-          _adicionarProduto();
-          //Get.to(() => AddItem());
+          //_adicionarProduto();
+          Get.to(() => AddItem());
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -441,12 +442,27 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
             title: Row(
               children: <Widget>[
                 // Daqui pra baixo, não tenho a minima noção de como esta funcionando.
-                Expanded(child: Text(listaPesquisa[index].CodProd)),
-                Expanded(child: Text(listaPesquisa[index].NomeProd), flex: 2)
+                Expanded(
+                    child: Text(
+                  listaPesquisa[index].CodProd,
+                  style: TextStyle(color: Colors.white),
+                )),
+                Expanded(
+                    child: Text(
+                      listaPesquisa[index].NomeProd,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    flex: 2)
               ],
             ),
-            subtitle: Text(listaPesquisa[index].CodBar),
-            trailing: Text(listaPesquisa[index].QtdProd.toString()),
+            subtitle: Text(
+              listaPesquisa[index].CodBar,
+              style: TextStyle(color: Colors.white),
+            ),
+            trailing: Text(
+              listaPesquisa[index].QtdProd.toString(),
+              style: TextStyle(color: Colors.white),
+            ),
             leading: CircleAvatar(
               child: Text(listaPesquisa[index].NomeProd[0]),
               backgroundColor: Color.fromARGB(255, 255, 136, 34),
