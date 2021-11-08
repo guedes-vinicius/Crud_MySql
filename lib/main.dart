@@ -1,5 +1,6 @@
 import 'package:contador_estoque/screens/Add%20Item.dart';
 import 'package:contador_estoque/screens/HomePage.dart';
+import 'package:contador_estoque/widgets/home_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -11,12 +12,19 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final ThemeData tema = ThemeData();
     Get.config(defaultTransition: Transition.cupertino);
     return GetMaterialApp(
-      theme: ThemeData(
+      theme: tema.copyWith(
+          colorScheme: tema.colorScheme
+              .copyWith(primary: Colors.white, secondary: Colors.orange))
+      /*ThemeData(
+          textSelectionTheme: TextSelectionThemeData(
+              cursorColor: Colors.white, selectionColor: Colors.orange),
           scaffoldBackgroundColor: Color(0xff232c51),
-          primaryColor: Color(0xffff0000),
-          bottomAppBarColor: Color(0xff18203d)),
+          primaryColor: Colors.white,
+          bottomAppBarColor: Color(0xff18203d))*/
+      ,
       getPages: [
         GetPage(
           name: '/',

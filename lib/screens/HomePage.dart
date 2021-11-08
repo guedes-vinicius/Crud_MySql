@@ -25,12 +25,11 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   final _cnome = TextEditingController();
   final _ccodbar = TextEditingController();
   final _cqtd = TextEditingController();
-  //const textstyle = TextStyle();
 
   final _formkey = GlobalKey<FormState>();
   static DatabaseHelper banco;
 
-  int tamanhoDaLista = 0;
+  int qtdListaPesquisa = 0;
   List<Itens> listaDeProdutos;
   List<Itens> listaPesquisa;
   bool isSearching = false;
@@ -46,7 +45,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
       setState(() {
         this.listaDeProdutos = novaListaDeProdutos;
         this.listaPesquisa = novaListaDeProdutos;
-        this.tamanhoDaLista = novaListaDeProdutos.length;
+        this.qtdListaPesquisa = novaListaDeProdutos.length;
       });
     });
   }
@@ -58,8 +57,8 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     noteListFuture.then((novaListaDeProdutos) {
       setState(() {
         this.listaDeProdutos = novaListaDeProdutos;
-        this.tamanhoDaLista = novaListaDeProdutos.length;
         this.listaPesquisa = novaListaDeProdutos;
+        this.qtdListaPesquisa = novaListaDeProdutos.length;
       });
     });
   }
@@ -127,6 +126,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
       body: _listaDeProdutos(),
       backgroundColor: Color(0xff232c51),
       bottomNavigationBar: BottomAppBar(
+        color: Color(0xff18203d),
         shape: CircularNotchedRectangle(),
         child: Row(
           children: [
@@ -180,8 +180,8 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         backgroundColor: Color.fromARGB(255, 255, 136, 34),
         child: Icon(Icons.add),
         onPressed: () {
-          //_adicionarProduto();
-          Get.to(() => AddItem());
+          _adicionarProduto();
+          //Get.to(() => AddItem());
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -192,7 +192,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     setState(() {
       listaDeProdutos = List.from(listaDeProdutos)..removeAt(index);
       banco.apagarProduto(itens.id);
-      tamanhoDaLista = tamanhoDaLista - 1;
+      qtdListaPesquisa -= 1;
       Get.snackbar("Removido", "Item removido com Sucesso!");
     });
   }
@@ -250,42 +250,51 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Novo Produto"),
+            backgroundColor: Color(0xff232c51),
+            title: Text(
+              "Novo Produto",
+              style: TextStyle(color: Colors.white),
+            ),
             content: Container(
-              child: Form(
-                key: _formkey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Flexible(
-                      child: campoCodigo(_ccodigo),
+              child: SingleChildScrollView(
+                  padding: EdgeInsets.all(10),
+                  child: Form(
+                    key: _formkey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Flexible(
+                          child: campoCodigo(_ccodigo),
+                        ),
+                        Divider(
+                          color: Colors.transparent,
+                          height: 10,
+                        ),
+                        Flexible(
+                          child: campoNome(_cnome),
+                        ),
+                        Divider(
+                          color: Colors.transparent,
+                          height: 10,
+                        ),
+                        Flexible(
+                          child: campoCodBar(_ccodbar),
+                        ),
+                        Divider(
+                          height: 10,
+                          color: Colors.transparent,
+                        ),
+                        Flexible(child: campoQtd(_cqtd)),
+                      ],
                     ),
-                    Divider(
-                      color: Colors.transparent,
-                      height: 10,
-                    ),
-                    Flexible(
-                      child: campoNome(_cnome),
-                    ),
-                    Divider(
-                      color: Colors.transparent,
-                      height: 10,
-                    ),
-                    Flexible(
-                      child: campoCodBar(_ccodbar),
-                    ),
-                    Divider(
-                      height: 10,
-                      color: Colors.transparent,
-                    ),
-                    Flexible(child: campoQtd(_cqtd))
-                  ],
-                ),
-              ),
+                  )),
             ),
             actions: <Widget>[
               TextButton(
-                child: Text('Salvar'),
+                child: Text(
+                  'Salvar',
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () {
                   Itens _itens;
                   if (_formkey.currentState.validate()) {
@@ -435,7 +444,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
   Widget _listaDeProdutos() {
     return ListView.builder(
       physics: const AlwaysScrollableScrollPhysics(),
-      itemCount: listaPesquisa.length,
+      itemCount: qtdListaPesquisa,
       itemBuilder: (context, index) {
         return GestureDetector(
           child: ListTile(
