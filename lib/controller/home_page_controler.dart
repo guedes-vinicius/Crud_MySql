@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class HomePageController extends GetxController {
   var valorCodigoBarras = '';
+  var zerar = '';
 
   Future<void> escanearCodigoBarras() async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -11,9 +12,16 @@ class HomePageController extends GetxController {
 
     if (barcodeScanRes == '-1') {
       Get.snackbar('Cancelado', 'Leitura Cancelada');
+      valorCodigoBarras = zerar;
+      update();
     } else {
       valorCodigoBarras = barcodeScanRes;
       update();
     }
+  }
+
+  void zerarCodigo() {
+    valorCodigoBarras = zerar;
+    update();
   }
 }

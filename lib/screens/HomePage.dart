@@ -228,7 +228,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         .where(
             (Itens) => Itens.CodBar.toLowerCase().contains(valor.toLowerCase()))
         .toList();
-    if (listaPesquisa.length == 0) {
+    if (listaPesquisa.length == 0 || listaPesquisa.isEmpty) {
       _adicionarProdutoCod();
     } else {
       setState(() {
@@ -321,9 +321,14 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Novo Produto"),
+            backgroundColor: Color(0xff232c51),
+            title: Text(
+              "Novo Produto",
+              style: TextStyle(color: Colors.white),
+            ),
             content: Container(
-              child: Form(
+              child: SingleChildScrollView(
+                  child: Form(
                 key: _formkey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -352,11 +357,14 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                     Flexible(child: campoQtd(_cqtd))
                   ],
                 ),
-              ),
+              )),
             ),
             actions: <Widget>[
               TextButton(
-                child: Text('Salvar'),
+                child: Text(
+                  'Salvar',
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () {
                   Itens _itens;
                   if (_formkey.currentState.validate()) {
@@ -366,6 +374,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                     _carregarLista();
                     _formkey.currentState.reset();
                     Navigator.of(context).pop();
+                    Get.find<HomePageController>().zerarCodigo();
                   }
                 },
               ),
@@ -384,9 +393,11 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            backgroundColor: Color(0xff232c51),
             title: Text("Atualizar Produto"),
             content: Container(
-              child: Form(
+              child: SingleChildScrollView(
+                  child: Form(
                 key: _formkey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -415,7 +426,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                     Flexible(child: campoQtd(_cqtd))
                   ],
                 ),
-              ),
+              )),
             ),
             actions: <Widget>[
               TextButton(
@@ -473,7 +484,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
               style: TextStyle(color: Colors.white),
             ),
             leading: CircleAvatar(
-              child: Text(listaPesquisa[index].NomeProd[0]),
+              child: Text(listaPesquisa[index].NomeProd[0].toUpperCase()),
               backgroundColor: Color.fromARGB(255, 255, 136, 34),
               foregroundColor: Color(0xfffcfcfc),
             ),
