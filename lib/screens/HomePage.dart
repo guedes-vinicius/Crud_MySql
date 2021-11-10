@@ -69,6 +69,13 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     });
   }
 
+  testePercorrer() {
+    for (var i = 0; i < qtdListaPesquisa; i++) {
+      print(
+          "${listaDeProdutos[i].NomeProd} | ${listaDeProdutos[i].CodBar} | ${listaDeProdutos[i].QtdProd}");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,7 +167,9 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
             IconButton(
                 icon: Icon(Icons.description_rounded),
                 color: Colors.white,
-                onPressed: () {}),
+                onPressed: () {
+                  testePercorrer();
+                }),
             Padding(padding: EdgeInsets.fromLTRB(10, 0, 8, 0)),
             IconButton(
                 icon: Icon(Icons.restore, size: 27),
@@ -394,7 +403,10 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: Color(0xff232c51),
-            title: Text("Atualizar Produto"),
+            title: Text(
+              "Atualizar Produto",
+              style: TextStyle(color: Colors.white),
+            ),
             content: Container(
               child: SingleChildScrollView(
                   child: Form(
