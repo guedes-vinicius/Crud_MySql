@@ -1,4 +1,3 @@
-import 'package:contador_estoque/controller/home_page_controler.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:contador_estoque/data/bancoHelper.dart';
@@ -6,7 +5,6 @@ import 'package:contador_estoque/data/itens.dart';
 import 'package:get/get.dart';
 import 'package:contador_estoque/widgets/home_widgets.dart';
 import 'dart:async';
-import 'package:contador_estoque/screens/Add Item.dart';
 
 class ListaDeProdutos extends StatefulWidget {
   ListaDeProdutos({Key key, this.titulo}) : super(key: key);
@@ -17,10 +15,6 @@ class ListaDeProdutos extends StatefulWidget {
 }
 
 class _ListaDeprodutosState extends State<ListaDeProdutos> {
-  _ListaDeprodutosState() {
-    Get.put(HomePageController());
-  }
-
   final _ccodigo = TextEditingController();
   final _cnome = TextEditingController();
   final _ccodbar = TextEditingController();
@@ -63,19 +57,6 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
     });
   }
 
-  _ordenarPorNome() {
-    setState(() {
-      banco.ordenarNome();
-    });
-  }
-
-  testePercorrer() {
-    for (var i = 0; i < qtdListaPesquisa; i++) {
-      print(
-          "${listaDeProdutos[i].NomeProd} | ${listaDeProdutos[i].CodBar} | ${listaDeProdutos[i].QtdProd}");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +65,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         title: !isSearching
             ? TextButton(
                 child: Text(
-                  "Contador de Estoque",
+                  "Crud_MySql",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
@@ -137,22 +118,6 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
         shape: CircularNotchedRectangle(),
         child: Row(
           children: [
-            Padding(padding: EdgeInsets.fromLTRB(5, 0, 0, 0)),
-            IconButton(
-                icon: Image.asset('assets/icon.png',
-                    width: 25, color: Colors.white),
-                onPressed: () {
-                  Get.find<HomePageController>().escanearCodigoBarras();
-                  if (Get.find<HomePageController>()
-                      .valorCodigoBarras
-                      .isEmpty) {
-                    Get.snackbar(
-                        "Vazio", "Não consegui ler o codigo. Tente novamente");
-                    Get.to('/');
-                  } else {
-                    _verificarCodBar();
-                  }
-                }),
             Padding(padding: EdgeInsets.fromLTRB(30, 0, 0, 0)),
             GestureDetector(
               onTap: () => _ordenarN(Itens),
@@ -164,13 +129,7 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
               ),
             ),
             Spacer(),
-            IconButton(
-                icon: Icon(Icons.description_rounded),
-                color: Colors.white,
-                onPressed: () {
-                  testePercorrer();
-                }),
-            Padding(padding: EdgeInsets.fromLTRB(10, 0, 8, 0)),
+            Padding(padding: EdgeInsets.fromLTRB(0, 0, 8, 30)),
             IconButton(
                 icon: Icon(Icons.restore, size: 27),
                 color: Colors.white,
@@ -229,24 +188,6 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
               Itens.NomeProd.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
-  }
-
-  void _verificarCodBar() {
-    String valor = Get.find<HomePageController>().valorCodigoBarras;
-    listaPesquisa = listaDeProdutos
-        .where(
-            (Itens) => Itens.CodBar.toLowerCase().contains(valor.toLowerCase()))
-        .toList();
-    if (listaPesquisa.length == 0 || listaPesquisa.isEmpty) {
-      _adicionarProdutoCod();
-    } else {
-      setState(() {
-        listaPesquisa = listaDeProdutos
-            .where((Itens) =>
-                Itens.CodBar.toLowerCase().contains(valor.toLowerCase()))
-            .toList();
-      });
-    }
   }
 
   void _adicionarProduto() {
@@ -313,77 +254,6 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
                     _carregarLista();
                     _formkey.currentState.reset();
                     Navigator.of(context).pop();
-                  }
-                },
-              ),
-            ],
-          );
-        });
-  }
-
-  void _adicionarProdutoCod() {
-    _ccodigo.text = '';
-    _cnome.text = '';
-    _ccodbar.text = Get.find<HomePageController>().valorCodigoBarras;
-    _cqtd.text = '';
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Color(0xff232c51),
-            title: Text(
-              "Novo Produto",
-              style: TextStyle(color: Colors.white),
-            ),
-            content: Container(
-              child: SingleChildScrollView(
-                  child: Form(
-                key: _formkey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Flexible(
-                      child: campoCodigo(_ccodigo),
-                    ),
-                    Divider(
-                      color: Colors.transparent,
-                      height: 10,
-                    ),
-                    Flexible(
-                      child: campoNome(_cnome),
-                    ),
-                    Divider(
-                      color: Colors.transparent,
-                      height: 10,
-                    ),
-                    Flexible(
-                      child: campoCodBar(_ccodbar),
-                    ),
-                    Divider(
-                      height: 10,
-                      color: Colors.transparent,
-                    ),
-                    Flexible(child: campoQtd(_cqtd))
-                  ],
-                ),
-              )),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  'Salvar',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  Itens _itens;
-                  if (_formkey.currentState.validate()) {
-                    _itens = Itens(
-                        _ccodigo.text, _cnome.text, _ccodbar.text, _cqtd.text);
-                    banco.inserirProduto(_itens);
-                    _carregarLista();
-                    _formkey.currentState.reset();
-                    Navigator.of(context).pop();
-                    Get.find<HomePageController>().zerarCodigo();
                   }
                 },
               ),
@@ -473,7 +343,6 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
           child: ListTile(
             title: Row(
               children: <Widget>[
-                // Daqui pra baixo, não tenho a minima noção de como esta funcionando.
                 Expanded(
                     child: Text(
                   listaPesquisa[index].CodProd,
@@ -507,17 +376,4 @@ class _ListaDeprodutosState extends State<ListaDeProdutos> {
       },
     );
   }
-}
-
-Widget _Loading() {
-  return Center(
-    child: Wrap(
-      alignment: WrapAlignment.center,
-      children: [
-        CircularProgressIndicator(),
-        SizedBox(width: 10),
-        Text('Loading...', style: TextStyle(fontSize: 20.0)),
-      ],
-    ),
-  );
 }

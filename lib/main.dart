@@ -1,9 +1,7 @@
-import 'package:contador_estoque/screens/Add%20Item.dart';
 import 'package:contador_estoque/screens/HomePage.dart';
-import 'package:contador_estoque/widgets/home_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:async';
+
 
 void main() {
   runApp(MyApp());
@@ -17,23 +15,15 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       theme: tema.copyWith(
           colorScheme: tema.colorScheme
-              .copyWith(primary: Colors.white, secondary: Colors.orange))
-      /*ThemeData(
-          textSelectionTheme: TextSelectionThemeData(
-              cursorColor: Colors.white, selectionColor: Colors.orange),
-          scaffoldBackgroundColor: Color(0xff232c51),
-          primaryColor: Colors.white,
-          bottomAppBarColor: Color(0xff18203d))*/
-      ,
+              .copyWith(primary: Colors.white, secondary: Colors.orange)),
       getPages: [
         GetPage(
           name: '/',
-          page: () => ListaDeProdutos(titulo: 'Contador de Estoque'),
+          page: () => ListaDeProdutos(titulo: 'Crud_MySqll'),
         ),
-        GetPage(name: '/AddItem', page: () => AddItem())
       ],
-      title: 'Contador de Estoque',
-      home: ListaDeProdutos(titulo: 'Contador de Estoque'),
+      title: 'Crud_MySql',
+      home: ListaDeProdutos(titulo: 'Crud_MySql'),
     );
   }
 }
